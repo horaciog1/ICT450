@@ -168,3 +168,4 @@ In this lab we show the use of the Social Engineering Toolkit (SET), Metasploit,
 6. We enter `exit` one more time to exit Metasploit.
 7. We can now close the terminal.
    
+#### 3. Using Armitage
