@@ -1,7 +1,7 @@
 <div style="display: flex; justify-content: space-between; align-items: center;">
-  <span style="text-align: left;">Horacio Gonzalez</span>
+  <span style="text-align: left;"><strong>Horacio Gonzalez</strong></span>
   <span style="text-align: center;"><strong>SET and Armitage</strong></span>
-  <span style="text-align: right;">ICT450 Ethical Hacking</span>
+  <span style="text-align: right;"><strong>ICT450 Ethical Hacking</strong></span>
 </div>
 
 #### **Overview**
@@ -18,15 +18,17 @@ In this lab we show the use of the Social Engineering Toolkit (SET), Metasploit,
    - **Password:** `AggiesR0ck$`
 
 5. Open Windows Defender, go to settings, disable Real Time Protection and Save changes.
-5. Open a terminal in Kali Linux and update the system:
+
+##### 1.2 Update and Configure Kali
+1. Open a terminal in Kali Linux and update the system:
    ```bash
    sudo apt update -y && sudo apt full-upgrade -y
     ```
-6. Start required services in Kali:
+2. Start required services in Kali:
     ```
     sudo systemctl start apache2
     ```
-7. Verify the services are running:
+3. Verify the services are running:
     ```
     sudo systemctl status apache2
     ```
@@ -82,11 +84,41 @@ In this lab we show the use of the Social Engineering Toolkit (SET), Metasploit,
 ##### 2.4 Go back to the terminal with the payload we haven't started
 1. Go back to the SET terminal and enter `yes` and hit Enter to start the payload listener.
 2. SET will now wait for the reverse shell connection.
-3. We can open a new terminal and check the ports open with
+3. We can open a new terminal and check if we have done this correctly by checking the ports open with:
     ```
     netstat -plnt
     ```
-4. Go back to the Metasploit terminal
+4. Go back to the Metasploit/SET terminal
 
 ##### 2.5 Go to the Windows machine
-1. Inside the Windows machine open Firefox
+1. Inside the Windows machine open Firefox and go to (your Kali's IP):
+    ```
+    http://192.168.56.4
+    ```
+2. Download the payload
+3. Go to the file location
+4. Right-Click the file and click `Properties`
+5. Click `Unblock` and click `Apply`, then `OK`
+6. Now open the File
+
+##### 2.6 Inside the Kali Machine
+1. We should see that a shell session was opened 
+2. To list all the sessions opened
+    ```
+    sessions -l
+    ```
+3. Then to interact with the session
+    ```
+    sessions -i <sessionID>
+    ```
+4. If we did everything correctly, we should be inside the machine, so run a couple of commands to check if we are indeed inside the target and get info about the system.
+    ```
+    dir
+    hostname
+    wmic os get caption
+    wmic computersystem get username
+    wmic process list brief
+    ```
+5. Once we are done exploiting the Windows machine we can close the reverse shell entering `exit`.
+6. We enter `exit` one more time to exit Metasploit.
+7. We can now close the terminal.
