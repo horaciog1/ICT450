@@ -150,3 +150,5 @@ In this lab we show the use of the Social Engineering Toolkit (SET), Metasploit,
 5. Once we are done exploiting the Windows machine we can close the reverse shell entering `exit`.
 6. We enter `exit` one more time to exit Metasploit.
 7. We can now close the terminal.
+   
+   
